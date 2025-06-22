@@ -24,3 +24,17 @@ export const Colors = {
     tabIconSelected: tintColorDark,
   },
 };
+
+// Life Admin Scheduler custom color palette
+export const COLORS = {
+  accent: '#3A7CA5', // Calm blue
+  background: '#F4F4F4', // Light gray
+  card: '#FFFFFF', // White
+  text: '#2D2D2D', // Charcoal
+  shadow: 'rgba(0,0,0,0.08)',
+  health: '#43A047', // Green
+  bills: '#FFD600', // Yellow
+  documents: '#FFB300', // Orange
+  personal: '#3A7CA5', // Blue
+  custom: '#AB47BC', // Purple
+};

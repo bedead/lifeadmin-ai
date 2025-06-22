@@ -4,6 +4,8 @@ import { StyleSheet } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+// This file is kept for routing fallback. You may customize or remove it if not needed.
+
 export default function NotFoundScreen() {
   return (
     <>
