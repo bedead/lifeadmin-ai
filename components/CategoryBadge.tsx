@@ -13,7 +13,7 @@ export const CategoryBadge: React.FC<Props> = ({ categoryKey }) => {
     return (
         <View style={[styles.badge, { backgroundColor: category.color }]}>
             <MaterialCommunityIcons name={category.icon as any} size={16} color="#fff" style={{ marginRight: 4 }} />
-            <Text style={styles.label}>{category.label}</Text>
+            <Text style={[styles.text, { color: '#fff' }]}>{category.label}</Text>
         </View>
     );
 };
@@ -22,15 +22,17 @@ const styles = StyleSheet.create({
     badge: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 12,
-        paddingHorizontal: 8,
-        paddingVertical: 4,
+        borderRadius: 16,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
         marginRight: 8,
+        marginTop: 8,
+        marginBottom: 8,
     },
-    label: {
-        color: '#fff',
+    text: {
         fontWeight: '600',
         fontSize: 13,
+        marginLeft: 4,
     },
 });
 

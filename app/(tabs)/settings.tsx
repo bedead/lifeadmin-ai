@@ -1,6 +1,8 @@
 import React from 'react';
-import { Alert, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import { cancelAllTaskNotifications, requestNotificationPermissions } from '../../components/NotificationManager';
+import { ThemedText } from '../../components/ThemedText';
+import { ThemedView } from '../../components/ThemedView';
 import { COLORS } from '../../constants/Colors';
 import { useColorScheme } from '../../hooks/useColorScheme';
 import { useTasks } from '../../state/TaskContext';
@@ -76,10 +78,9 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Settings</Text>
+    <ThemedView style={styles.container}>
       <View style={styles.row}>
-        <Text style={styles.label}>Task Notifications</Text>
+        <ThemedText style={styles.label}>Task Notifications</ThemedText>
         <Switch
           value={notificationsEnabled}
           onValueChange={handleToggleNotifications}
@@ -88,7 +89,7 @@ export default function SettingsScreen() {
         />
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Use System Theme</Text>
+        <ThemedText style={styles.label}>Use System Theme</ThemedText>
         <Switch
           value={useSystemTheme}
           onValueChange={handleToggleSystemTheme}
@@ -97,7 +98,7 @@ export default function SettingsScreen() {
         />
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Dark Mode</Text>
+        <ThemedText style={styles.label}>Dark Mode</ThemedText>
         <Switch
           value={darkMode}
           onValueChange={handleToggleDarkMode}
@@ -107,32 +108,32 @@ export default function SettingsScreen() {
         />
       </View>
       <View style={styles.rowButtons}>
-        <Text style={styles.label}>Export/Import Tasks</Text>
+        <ThemedText style={styles.label}>Export/Import Tasks</ThemedText>
         <View style={{ flexDirection: 'row', gap: 8 }}>
           <TouchableOpacity style={styles.button} onPress={handleExport} accessibilityLabel="Export tasks">
-            <Text style={styles.buttonText}>Export</Text>
+            <ThemedText style={styles.buttonText}>Export</ThemedText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleImport} accessibilityLabel="Import tasks">
-            <Text style={styles.buttonText}>Import</Text>
+            <ThemedText style={styles.buttonText}>Import</ThemedText>
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Biometric Lock</Text>
+        <ThemedText style={styles.label}>Biometric Lock</ThemedText>
         <TouchableOpacity style={styles.button} onPress={handleBiometricLock} accessibilityLabel="Enable biometric lock">
-          <Text style={styles.buttonText}>Enable</Text>
+          <ThemedText style={styles.buttonText}>Enable</ThemedText>
         </TouchableOpacity>
       </View>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.background, padding: 24 },
-  header: { fontSize: 22, fontWeight: '700', color: COLORS.text, marginBottom: 24 },
+  container: { flex: 1, padding: 24 },
+  header: { fontSize: 22, fontWeight: '700', marginBottom: 24 },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },
   rowButtons: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },
-  label: { fontSize: 16, color: COLORS.text },
+  label: { fontSize: 16 },
   button: {
     backgroundColor: COLORS.accent,
     borderRadius: 8,

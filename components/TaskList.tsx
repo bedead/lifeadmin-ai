@@ -1,10 +1,10 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { TASK_CATEGORIES } from '../constants/categories';
-import { COLORS } from '../constants/Colors';
 import { Task } from '../types/task';
 import { CategoryBadge } from './CategoryBadge';
 import { TaskCard } from './TaskCard';
+import { ThemedText } from './ThemedText';
 
 interface Props {
     tasks: Task[];
@@ -16,7 +16,7 @@ export const TaskList: React.FC<Props> = ({ tasks, onEdit, onDone }) => {
     if (!tasks.length) {
         return (
             <View style={styles.empty}>
-                <Text style={styles.emptyText}>All clear! Nothing pending 🎉</Text>
+                <ThemedText style={styles.emptyText}>All clear! Nothing pending 🎉</ThemedText>
             </View>
         );
     }
@@ -52,7 +52,7 @@ export const TaskList: React.FC<Props> = ({ tasks, onEdit, onDone }) => {
 const styles = StyleSheet.create({
     group: { marginBottom: 24 },
     empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
-    emptyText: { color: COLORS.text, fontSize: 16, opacity: 0.7 },
+    emptyText: { fontSize: 16, opacity: 0.7 },
 });
 
 // TODO: Add sorting, filtering, and swipe-to-delete

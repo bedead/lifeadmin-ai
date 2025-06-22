@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS } from '../constants/Colors';
 import { Task } from '../types/task';
+import { CARD_RADIUS, CARD_SHADOW } from './TaskCard';
 
 interface Props {
   tasks: Task[];
@@ -78,7 +79,7 @@ export const CalendarView: React.FC<Props> = ({ tasks, onSelectDate, onTaskPress
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: COLORS.card, borderRadius: 16, padding: 12, margin: 8, elevation: 1 },
+  container: { backgroundColor: COLORS.card, borderRadius: CARD_RADIUS, padding: 16, margin: 8, ...CARD_SHADOW },
   header: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
   headerText: { color: COLORS.text, fontWeight: '600', width: 28, textAlign: 'center' },
   week: { flexDirection: 'row', justifyContent: 'space-between' },

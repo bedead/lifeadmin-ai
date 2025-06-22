@@ -1,3 +1,4 @@
+import { useThemeColor } from '@/hooks/useThemeColor';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
@@ -7,6 +8,7 @@ import { COLORS } from '../constants/Colors';
 import { TASK_CATEGORIES } from '../constants/categories';
 import { RECURRENCE_OPTIONS } from '../constants/recurrence';
 import { Task } from '../types/task';
+import { CARD_RADIUS, CARD_SHADOW } from './TaskCard';
 
 interface Props {
   visible: boolean;
@@ -21,6 +23,8 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
   const [dueDate, setDueDate] = useState<Date>(initialTask ? new Date(initialTask.dueDate) : new Date());
   const [recurrence, setRecurrence] = useState(initialTask?.recurrence || 'none');
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const textColor = useThemeColor({}, 'text');
 
   const handleSave = () => {
     const task: Task = {
@@ -41,14 +45,15 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
-        <View style={styles.container}>
-          <Text style={styles.header}>{initialTask ? 'Edit Task' : 'Add Task'}</Text>
+        <View style={[styles.container, CARD_SHADOW]}>
+          <Text style={[styles.header, { color: textColor }]}>{initialTask ? 'Edit Task' : 'Add Task'}</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { color: textColor }]}
             placeholder="Task title"
             value={title}
             onChangeText={setTitle}
             accessibilityLabel="Task title"
+            placeholderTextColor={textColor}
           />
           <Picker
             selectedValue={category}
@@ -61,7 +66,7 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
             ))}
           </Picker>
           <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateButton} accessibilityLabel="Pick due date">
-            <Text style={styles.dateText}>Due: {dueDate.toLocaleDateString()}</Text>
+            <Text style={[styles.dateText, { color: textColor }]}>Due: {dueDate.toLocaleDateString()}</Text>
           </TouchableOpacity>
           {showDatePicker && (
             <DateTimePicker
@@ -86,7 +91,7 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
           </Picker>
           <View style={styles.actions}>
             <TouchableOpacity onPress={onClose} style={styles.cancelButton} accessibilityLabel="Cancel">
-              <Text style={styles.cancelText}>Cancel</Text>
+              <Text style={[styles.cancelText, { color: textColor }]}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSave} style={styles.saveButton} accessibilityLabel="Save task">
               <Text style={styles.saveText}>{initialTask ? 'Update' : 'Add'}</Text>
@@ -107,16 +112,11 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: COLORS.card,
-    borderRadius: 20,
+    borderRadius: CARD_RADIUS,
     padding: 20,
     width: '90%',
-    shadowColor: COLORS.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
   },
-  header: { fontSize: 18, fontWeight: '700', color: COLORS.text, marginBottom: 12 },
+  header: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
   input: {
     borderWidth: 1,
     borderColor: COLORS.background,
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 12,
     backgroundColor: COLORS.background,
-    color: COLORS.text,
   },
   picker: { marginBottom: 12 },
   dateButton: {
@@ -133,10 +132,10 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 12,
   },
-  dateText: { color: COLORS.text },
+  dateText: {},
   actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
   cancelButton: { padding: 10 },
-  cancelText: { color: COLORS.text },
+  cancelText: {},
   saveButton: {
     backgroundColor: COLORS.accent,
     borderRadius: 10,
