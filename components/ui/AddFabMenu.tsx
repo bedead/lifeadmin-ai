@@ -2,7 +2,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { Animated, Easing, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useThemeColor } from '../../hooks/useThemeColor';
-import { ThemedText } from '../ThemedText';
 
 interface AddFabMenuProps {
     visible: boolean;
@@ -51,9 +50,14 @@ export const AddFabMenu: React.FC<AddFabMenuProps> = ({ visible, onClose, onAddD
                     {/* <ThemedText style={styles.menuLabel}>Task</ThemedText> */}
                 </TouchableOpacity>
             </View>
-            <Animated.View style={[styles.fab, { borderColor: borderColor, backgroundColor: accentColor, transform: [{ rotate: rotation }] }]}>
-                <FontAwesome name="plus" size={24} color={backgroundColor} />
-            </Animated.View>
+            <TouchableOpacity
+                onPress={onClose}
+                style={styles.fab}
+            >
+                <Animated.View style={[StyleSheet.absoluteFill, { borderRadius: 32, borderColor: borderColor, backgroundColor: accentColor, alignItems: 'center', justifyContent: 'center', transform: [{ rotate: rotation }] }]}> 
+                    <FontAwesome name="plus" size={24} color={backgroundColor} />
+                </Animated.View>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
     overlay: {
         ...StyleSheet.absoluteFillObject,
         zIndex: 100,
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-end', 
         alignItems: 'center',
     },
     backdrop: {
@@ -94,7 +98,6 @@ const styles = StyleSheet.create({
     },
     fab: {
         position: 'absolute',
-        elevation: 4,
         bottom: 20,
         right: 32,
         width: 58,

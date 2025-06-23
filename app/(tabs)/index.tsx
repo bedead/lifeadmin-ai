@@ -38,14 +38,16 @@ export default function TabsHome() {
             <ThemedView style={[styles.container, { backgroundColor: backgroundColor }]}> {/* theme-aware */}
                 <TaskList tasks={tasks} onEdit={handleEdit} onDone={(task) => markDone(task.id)} />
                 {/* FAB Button */}
-                <TouchableOpacity
-                    style={[styles.fab, { backgroundColor: accentColor, shadowColor }]}
-                    onPress={() => setFabMenuVisible(true)}
-                    accessibilityLabel="Add menu"
-                    activeOpacity={0.85}
-                >
-                    <FontAwesome name="plus" size={24} color={backgroundColor} />
-                </TouchableOpacity>
+                {!fabMenuVisible && (
+                    <TouchableOpacity
+                        style={[styles.fab, { backgroundColor: accentColor, shadowColor }]}
+                        onPress={() => setFabMenuVisible(true)}
+                        accessibilityLabel="Add menu"
+                        activeOpacity={0.85}
+                    >
+                        <FontAwesome name="plus" size={24} color={backgroundColor} />
+                    </TouchableOpacity>
+                )}
                 {/* FAB Menu Overlay */}
                 <AddFabMenu
                     visible={fabMenuVisible}
@@ -73,7 +75,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 20,
-        elevation: 4,
     },
 });
 
