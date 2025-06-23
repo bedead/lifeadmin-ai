@@ -13,7 +13,8 @@ interface Tab {
 const TABS: Tab[] = [
   { key: 'home', label: 'Home', icon: 'home-outline' },
   { key: 'calendar', label: 'Calendar', icon: 'calendar-month-outline' },
-  { key: 'add', label: 'Add', icon: 'plus-circle-outline' },
+  { key: 'documents', label: 'Documents', icon: 'file-document-outline' },
+  { key: 'cards', label: 'Cards', icon: 'credit-card-outline' },
   { key: 'settings', label: 'Settings', icon: 'cog-outline' },
 ];
 

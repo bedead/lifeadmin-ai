@@ -1,9 +1,21 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
-import TabBarBackground from '../../components/ui/TabBarBackground';
 import { useThemeColor } from '../../hooks/useThemeColor';
+import { BottomNav } from '@/components/BottomNav';
 
-
+interface BottomTab {
+    key: string;
+    label: string;
+    icon: string;
+    disabled: boolean;
+}
+const BottomTab: BottomTab[] = [
+    { key: 'index', label: 'Home', icon: 'home', disabled: false },
+    { key: 'cards', label: 'Cards', icon: 'credit-card', disabled: false },
+    { key: 'documents', label: 'Documents', icon: 'file', disabled: false },
+    { key: 'calendar', label: 'Calendar', icon: 'calendar', disabled: true },
+    { key: 'settings', label: 'Settings', icon: 'cog', disabled: false },
+];
 
 export default function TabLayout() {
     const accentColor = useThemeColor({}, 'accent');
@@ -15,31 +27,14 @@ export default function TabLayout() {
                 tabBarAccessibilityLabel: 'Bottom navigation',
             }}
         >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    title: 'Home',
+            {BottomTab.map(tab => (
+                <Tabs.Screen name={tab.key} options={{
+                    title: tab.label,
                     headerShown: false,
-                    tabBarIcon: ({ color }) => <FontAwesome size={24} name="home" color={color} accessibilityLabel="Home" />, // accessibility
-                }}
-            />
-            <Tabs.Screen
-                name="calendar"
-                options={{
-                    title: 'Calendar',
-                    headerShown: false,
-                    href: null,
-                    tabBarIcon: ({ color }) => <FontAwesome size={24} name="calendar" color={color} accessibilityLabel="Calendar" />, // accessibility
-                }}
-            />
-            <Tabs.Screen
-                name="settings"
-                options={{
-                    title: 'Settings',
-                    headerShown: false,
-                    tabBarIcon: ({ color }) => <FontAwesome size={24} name="cog" color={color} accessibilityLabel="Settings" />, // accessibility
-                }}
-            />
+                    href: tab.disabled ? null : undefined,
+                    tabBarIcon: ({ color }) => <FontAwesome size={24} name={tab.icon as any} color={color} accessibilityLabel={tab.label} />, // accessibility
+                }} />
+            ))}
         </Tabs>
     );
 }
