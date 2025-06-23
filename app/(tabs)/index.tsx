@@ -1,16 +1,22 @@
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
 import { TaskList } from '../../components/TaskList';
 import { ThemedView } from '../../components/ThemedView';
-import { COLORS } from '../../constants/Colors';
+import { AddFabMenu } from '../../components/ui/AddFabMenu';
 import { useTasks } from '../../state/TaskContext';
 import { Task } from '../../types/task';
 
 export default function TabsHome() {
     const { tasks, addTask, updateTask, markDone } = useTasks();
-    const [activeTab, setActiveTab] = useState<'home' | 'calendar' | 'add' | 'settings'>('home');
     const [formVisible, setFormVisible] = useState(false);
     const [editTask, setEditTask] = useState<Task | undefined>(undefined);
+    const [fabMenuVisible, setFabMenuVisible] = useState(false);
+
+    const accentColor = useThemeColor({}, 'accent');
+    const backgroundColor = useThemeColor({}, 'background');
+    const shadowColor = useThemeColor({}, 'shadow');
 
     const handleEdit = (task: Task) => {
         setEditTask(task);
@@ -28,9 +34,26 @@ export default function TabsHome() {
     };
 
     return (
-        <SafeAreaView style={styles.safe}>
-            <ThemedView style={styles.container}>
+        <SafeAreaView style={[styles.safe, { backgroundColor: backgroundColor }]}> {/* theme-aware */}
+            <ThemedView style={[styles.container, { backgroundColor: backgroundColor }]}> {/* theme-aware */}
                 <TaskList tasks={tasks} onEdit={handleEdit} onDone={(task) => markDone(task.id)} />
+                {/* FAB Button */}
+                <TouchableOpacity
+                    style={[styles.fab, { backgroundColor: accentColor, shadowColor }]}
+                    onPress={() => setFabMenuVisible(true)}
+                    accessibilityLabel="Add menu"
+                    activeOpacity={0.85}
+                >
+                    <FontAwesome name="plus" size={24} color={backgroundColor} />
+                </TouchableOpacity>
+                {/* FAB Menu Overlay */}
+                <AddFabMenu
+                    visible={fabMenuVisible}
+                    onClose={() => setFabMenuVisible(false)}
+                    onAddDocument={() => { setFabMenuVisible(false); /* TODO: Show add document modal */ }}
+                    onAddCard={() => { setFabMenuVisible(false); /* TODO: Show add card modal */ }}
+                    onAddTask={() => { setFabMenuVisible(false); handleAdd(); }}
+                />
             </ThemedView>
         </SafeAreaView>
     );
@@ -39,36 +62,17 @@ export default function TabsHome() {
 const styles = StyleSheet.create({
     safe: { flex: 1 },
     container: { flex: 1, padding: 8 },
-    appBar: {
-        height: 56,
-        backgroundColor: COLORS.accent,
-        alignItems: 'center',
-        justifyContent: 'center',
-        elevation: 4,
-        shadowColor: COLORS.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.12,
-        shadowRadius: 8,
-    },
-    appBarTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        letterSpacing: 1,
-    },
     fab: {
         position: 'absolute',
-        right: 24,
-        bottom: 88,
-        backgroundColor: COLORS.accent,
+        alignSelf: 'center',
+        bottom: 20, // floats above tab bar, adjust as needed
+        right: 32,
         borderRadius: 32,
-        width: 56,
-        height: 56,
+        width: 58,
+        height: 58,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: COLORS.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.18,
-        shadowRadius: 8,
+        zIndex: 20,
         elevation: 4,
     },
 });

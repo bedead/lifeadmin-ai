@@ -19,20 +19,4 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1 },
   container: { flex: 1, padding: 8 },
-  appBar: {
-    height: 56,
-    backgroundColor: COLORS.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 4,
-    shadowColor: COLORS.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-  },
-  appBarTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    letterSpacing: 1,
-  },
 });

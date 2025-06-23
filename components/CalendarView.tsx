@@ -79,7 +79,7 @@ export const CalendarView: React.FC<Props> = ({ tasks, onSelectDate, onTaskPress
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: COLORS.card, borderRadius: CARD_RADIUS, padding: 16, margin: 8, ...CARD_SHADOW },
+  container: { backgroundColor: COLORS.card, borderRadius: CARD_RADIUS, marginTop: 30, padding: 16, margin: 8, ...CARD_SHADOW },
   header: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
   headerText: { color: COLORS.text, fontWeight: '600', width: 28, textAlign: 'center' },
   week: { flexDirection: 'row', justifyContent: 'space-between' },

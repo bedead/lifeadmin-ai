@@ -8,24 +8,34 @@ const tintColorDark = '#fff';
 
 export const Colors = {
   light: {
+    accent: "#5F6FFF",
+    faded: "#e0e0e0",
     text: '#11181C',
     background: '#fff',
     tint: tintColorLight,
     icon: '#687076',
     tabIconDefault: '#687076',
+    card: '#F8F9FA',
     tabIconSelected: tintColorLight,
+    border: '#E0E0E0',
+    shadow: 'rgba(0,0,0,0.08)',
   },
   dark: {
+    accent: "#7F5AF0",
     text: '#ECEDEE',
+    faded: "#44475a",
     background: '#151718',
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
+    card: '#1E2022',
     tabIconSelected: tintColorDark,
+    border: '#2C2F33',
+    shadow: 'rgb(255, 255, 255)',
   },
 };
 
-// Life Admin Scheduler custom color palette
+// Life Admin custom color palette
 export const COLORS = {
   accent: '#3A7CA5', // Calm blue
   background: '#F4F4F4', // Light gray

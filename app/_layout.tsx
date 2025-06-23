@@ -21,12 +21,12 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <TaskProvider>
+        <StatusBar translucent style="auto" />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" options={{ headerShown: false }} />
         </Stack>
       </TaskProvider>
-      <StatusBar style="auto" />
     </ThemeProvider>
   );
 }
