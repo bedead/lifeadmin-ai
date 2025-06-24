@@ -103,7 +103,7 @@ export default function SettingsScreen() {
           trackColor={{ true: accent, false: border }}
         />
       </View>
-      <View style={[styles.row, { borderColor: border }]}> {/* Add border for separation if desired */}
+      <View style={[useSystemTheme ? { opacity: 0.5 } : undefined, styles.row, { borderColor: border }]}> {/* Add border for separation if desired */}
         <ThemedText type='default' style={[styles.label, { color: text }]}>Dark Mode</ThemedText>
         <Switch
           value={darkMode}

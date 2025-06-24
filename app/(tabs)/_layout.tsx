@@ -1,7 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { useThemeColor } from '../../hooks/useThemeColor';
-import { BottomNav } from '@/components/BottomNav';
 
 interface BottomTab {
     key: string;
@@ -28,7 +27,7 @@ export default function TabLayout() {
             }}
         >
             {BottomTab.map(tab => (
-                <Tabs.Screen name={tab.key} options={{
+                <Tabs.Screen key={tab.key} name={tab.key} options={{
                     title: tab.label,
                     headerShown: false,
                     href: tab.disabled ? null : undefined,
