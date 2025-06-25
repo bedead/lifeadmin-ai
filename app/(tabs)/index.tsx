@@ -3,6 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { TaskList } from '../../components/TaskList';
+import { TaskForm } from '../../components/TaskForm';
 import { ThemedView } from '../../components/ThemedView';
 import { AddFabMenu } from '../../components/ui/AddFabMenu';
 import { COLORS } from '../../constants/Colors';
@@ -15,7 +16,7 @@ export default function TabsHome() {
     const { tasks, addTask, updateTask, markDone } = useTasks();
     const { addCard } = useCards();
     const { addDocument } = useDocuments();
-    const [formVisible, setFormVisible] = useState(false);
+    const [taskModelVisible, setModelTaskVisible] = useState(false);
     const [editTask, setEditTask] = useState<Task | undefined>(undefined);
     const [fabMenuVisible, setFabMenuVisible] = useState(false);
     const [cardModalVisible, setCardModalVisible] = useState(false);
@@ -42,17 +43,17 @@ export default function TabsHome() {
     const backgroundColor = useThemeColor({}, 'background');
     const shadowColor = useThemeColor({}, 'shadow');
 
-    const handleEdit = (task: Task) => {
+    const handleEditTask = (task: Task) => {
         setEditTask(task);
-        setFormVisible(true);
+        setModelTaskVisible(true);
     };
 
     const handleAddTask = () => {
         setEditTask(undefined);
-        setFormVisible(true);
+        setModelTaskVisible(true);
     };
 
-    const handleSubmit = (task: Task) => {
+    const handleSubmitTask = (task: Task) => {
         if (editTask) updateTask(task);
         else addTask(task);
     };
@@ -98,7 +99,7 @@ export default function TabsHome() {
     return (
         <SafeAreaView style={[styles.safe, { backgroundColor: backgroundColor }]}>
             <ThemedView style={[styles.container, { backgroundColor: backgroundColor }]}>
-                <TaskList tasks={tasks} onEdit={handleEdit} onDone={(task) => markDone(task.id)} />
+                <TaskList tasks={tasks} onEdit={handleEditTask} onDone={(task) => markDone(task.id)} />
                 {!fabMenuVisible && (
                     <TouchableOpacity
                         style={[styles.fab, { backgroundColor: accentColor, shadowColor }]}
@@ -153,10 +154,10 @@ export default function TabsHome() {
                         </View>
                     </View>
                 </Modal>
-                {/* Task Form Modal (already implemented) */}
-                {/* ...existing code for TaskForm... */}
+                <TaskForm visible={taskModelVisible} onClose={() => setModelTaskVisible(false)} onSubmit={handleSubmitTask} />
+
             </ThemedView>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 
