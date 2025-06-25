@@ -4,7 +4,6 @@ import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
 import { Modal, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import uuid from 'react-native-uuid';
-import { COLORS } from '../constants/Colors';
 import { TASK_CATEGORIES } from '../constants/categories';
 import { RECURRENCE_OPTIONS } from '../constants/recurrence';
 import { Task } from '../types/task';
@@ -24,11 +23,19 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
   const [recurrence, setRecurrence] = useState(initialTask?.recurrence || 'none');
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const textColor = useThemeColor({}, 'text');
+  const COLORS = {
+    background: useThemeColor({}, 'background'),
+    card: useThemeColor({}, 'card'),
+    accent: useThemeColor({}, 'accent'),
+    text: useThemeColor({}, 'text')
+  };
+
+  const styles = getStyles(COLORS, CARD_RADIUS);
+
 
   const handleSave = () => {
     const task: Task = {
-      id: initialTask?.id || uuid.v4().toString(),
+      id: initialTask?.id || (uuid.v4() as string),
       title,
       category,
       dueDate: dueDate.toISOString(),
@@ -46,14 +53,14 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
         <View style={[styles.container, CARD_SHADOW]}>
-          <Text style={[styles.header, { color: textColor }]}>{initialTask ? 'Edit Task' : 'Add Task'}</Text>
+          <Text style={[styles.header, { color: COLORS.text }]}>{initialTask ? 'Edit Task' : 'Add Task'}</Text>
           <TextInput
-            style={[styles.input, { color: textColor }]}
+            style={[styles.input, { color: COLORS.text }]}
             placeholder="Task title"
             value={title}
             onChangeText={setTitle}
             accessibilityLabel="Task title"
-            placeholderTextColor={textColor}
+            placeholderTextColor={COLORS.text}
           />
           <Picker
             selectedValue={category}
@@ -66,7 +73,7 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
             ))}
           </Picker>
           <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateButton} accessibilityLabel="Pick due date">
-            <Text style={[styles.dateText, { color: textColor }]}>Due: {dueDate.toLocaleDateString()}</Text>
+            <Text style={[styles.dateText, { color: COLORS.text }]}>Due: {dueDate.toLocaleDateString()}</Text>
           </TouchableOpacity>
           {showDatePicker && (
             <DateTimePicker
@@ -91,7 +98,7 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
           </Picker>
           <View style={styles.actions}>
             <TouchableOpacity onPress={onClose} style={styles.cancelButton} accessibilityLabel="Cancel">
-              <Text style={[styles.cancelText, { color: textColor }]}>Cancel</Text>
+              <Text style={[styles.cancelText, { color: COLORS.text }]}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSave} style={styles.saveButton} accessibilityLabel="Save task">
               <Text style={styles.saveText}>{initialTask ? 'Update' : 'Add'}</Text>
@@ -103,45 +110,47 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
   );
 };
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    backgroundColor: COLORS.card,
-    borderRadius: CARD_RADIUS,
-    padding: 20,
-    width: '90%',
-  },
-  header: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
-  input: {
-    borderWidth: 1,
-    borderColor: COLORS.background,
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 12,
-    backgroundColor: COLORS.background,
-  },
-  picker: { marginBottom: 12 },
-  dateButton: {
-    backgroundColor: COLORS.background,
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 12,
-  },
-  dateText: {},
-  actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
-  cancelButton: { padding: 10 },
-  cancelText: {},
-  saveButton: {
-    backgroundColor: COLORS.accent,
-    borderRadius: 10,
-    padding: 10,
-  },
-  saveText: { color: '#fff', fontWeight: '600' },
-});
+function getStyles(COLORS: any, CARD_RADIUS: number) {
+  return StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    container: {
+      backgroundColor: COLORS.card,
+      borderRadius: CARD_RADIUS,
+      padding: 20,
+      width: '90%',
+    },
+    header: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
+    input: {
+      borderWidth: 1,
+      borderColor: COLORS.background,
+      borderRadius: 10,
+      padding: 10,
+      marginBottom: 12,
+      backgroundColor: COLORS.background,
+    },
+    picker: { marginBottom: 12 , color: COLORS.text},
+    dateButton: {
+      backgroundColor: COLORS.background,
+      borderRadius: 10,
+      padding: 10,
+      marginBottom: 12,
+    },
+    dateText: {},
+    actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
+    cancelButton: { padding: 10 },
+    cancelText: {},
+    saveButton: {
+      backgroundColor: COLORS.accent,
+      borderRadius: 10,
+      padding: 10,
+    },
+    saveText: { color: '#fff', fontWeight: '600' },
+  });
+}
 
 // TODO: Add accessibility improvements, validation, and support for notes
