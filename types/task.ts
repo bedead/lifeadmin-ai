@@ -4,7 +4,7 @@ export type Task = {
   title: string;
   category: string;
   dueDate: string; // ISO string
-  recurrence: 'none' | 'monthly' | 'yearly';
+  recurrence: 'none' | "daily" | 'weekly' | 'monthly' | 'yearly';
   done: boolean;
   snoozed: boolean;
   notes?: string;

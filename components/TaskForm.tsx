@@ -3,7 +3,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
 import { Modal, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { v4 as uuidv4 } from 'uuid';
+import uuid from 'react-native-uuid';
 import { COLORS } from '../constants/Colors';
 import { TASK_CATEGORIES } from '../constants/categories';
 import { RECURRENCE_OPTIONS } from '../constants/recurrence';
@@ -28,11 +28,11 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
 
   const handleSave = () => {
     const task: Task = {
-      id: initialTask?.id || uuidv4(),
+      id: initialTask?.id || uuid.v4().toString(),
       title,
       category,
       dueDate: dueDate.toISOString(),
-      recurrence: recurrence as 'none' | 'monthly' | 'yearly',
+      recurrence: recurrence as 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly',
       done: initialTask?.done || false,
       snoozed: initialTask?.snoozed || false,
       createdAt: initialTask?.createdAt || new Date().toISOString(),
