@@ -34,10 +34,9 @@ export default function TabsHome() {
     };
 
     return (
-        <SafeAreaView style={[styles.safe, { backgroundColor: backgroundColor }]}> {/* theme-aware */}
-            <ThemedView style={[styles.container, { backgroundColor: backgroundColor }]}> {/* theme-aware */}
+        <SafeAreaView style={[styles.safe, { backgroundColor: backgroundColor }]}>
+            <ThemedView style={[styles.container, { backgroundColor: backgroundColor }]}>
                 <TaskList tasks={tasks} onEdit={handleEdit} onDone={(task) => markDone(task.id)} />
-                {/* FAB Button */}
                 {!fabMenuVisible && (
                     <TouchableOpacity
                         style={[styles.fab, { backgroundColor: accentColor, shadowColor }]}
@@ -48,12 +47,11 @@ export default function TabsHome() {
                         <FontAwesome name="plus" size={24} color={backgroundColor} />
                     </TouchableOpacity>
                 )}
-                {/* FAB Menu Overlay */}
                 <AddFabMenu
                     visible={fabMenuVisible}
                     onClose={() => setFabMenuVisible(false)}
-                    onAddDocument={() => { setFabMenuVisible(false); /* TODO: Show add document modal */ }}
-                    onAddCard={() => { setFabMenuVisible(false); /* TODO: Show add card modal */ }}
+                    onAddDocument={() => { setFabMenuVisible(false); }}
+                    onAddCard={() => { setFabMenuVisible(false); }}
                     onAddTask={() => { setFabMenuVisible(false); handleAdd(); }}
                 />
             </ThemedView>

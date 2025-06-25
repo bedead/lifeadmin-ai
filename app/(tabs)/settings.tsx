@@ -84,8 +84,8 @@ export default function SettingsScreen() {
   const border = useThemeColor({}, 'border');
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: background }]}> {/* already themed, but explicit */}
-      <View style={[styles.row, { borderColor: border }]}> {/* Add border for separation if desired */}
+    <ThemedView style={[styles.container, { backgroundColor: background }]}>
+      <View style={[styles.row, { borderColor: border }]}> 
         <ThemedText type='default' style={[styles.label, { color: text }]}>Task Notifications</ThemedText>
         <Switch
           value={notificationsEnabled}
@@ -94,7 +94,7 @@ export default function SettingsScreen() {
           trackColor={{ true: accent, false: border }}
         />
       </View>
-      <View style={[styles.row, { borderColor: border }]}> {/* Add border for separation if desired */}
+      <View style={[styles.row, { borderColor: border }]}>
         <ThemedText type='default' style={[styles.label, { color: text }]}>Use System Theme</ThemedText>
         <Switch
           value={useSystemTheme}
@@ -103,7 +103,7 @@ export default function SettingsScreen() {
           trackColor={{ true: accent, false: border }}
         />
       </View>
-      <View style={[useSystemTheme ? { opacity: 0.5 } : undefined, styles.row, { borderColor: border }]}> {/* Add border for separation if desired */}
+      <View style={[useSystemTheme ? { opacity: 0.5 } : null, styles.row, { borderColor: border }]}> 
         <ThemedText type='default' style={[styles.label, { color: text }]}>Dark Mode</ThemedText>
         <Switch
           value={darkMode}
@@ -111,7 +111,7 @@ export default function SettingsScreen() {
           thumbColor={darkMode ? accent : background}
           trackColor={{ true: accent, false: border }}
           disabled={useSystemTheme}
-          style={useSystemTheme ? { opacity: 0.5 } : undefined}
+          style={useSystemTheme ? { opacity: 0.5 } : null}
         />
       </View>
       <View style={styles.rowButtons}>
