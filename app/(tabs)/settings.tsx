@@ -84,7 +84,7 @@ export default function SettingsScreen() {
   const border = useThemeColor({}, 'border');
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: background }]}>
+    <ThemedView style={[styles.container, { backgroundColor: background }]}> 
       <View style={[styles.row, { borderColor: border }]}> 
         <ThemedText type='default' style={[styles.label, { color: text }]}>Task Notifications</ThemedText>
         <Switch
@@ -94,7 +94,7 @@ export default function SettingsScreen() {
           trackColor={{ true: accent, false: border }}
         />
       </View>
-      <View style={[styles.row, { borderColor: border }]}>
+      <View style={[styles.row, { borderColor: border }]}> 
         <ThemedText type='default' style={[styles.label, { color: text }]}>Use System Theme</ThemedText>
         <Switch
           value={useSystemTheme}

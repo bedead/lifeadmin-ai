@@ -1,11 +1,16 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { CardView } from '../../components/CardView';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
+import { useThemeColor } from '../../hooks/useThemeColor';
 import { CardProvider, useCards } from '../../state/CardContext';
 
 function CardsScreenContent() {
-    const { cards } = useCards();
+    const { cards, removeCard } = useCards();
+    const accentColor = useThemeColor({}, 'accent');
+    const backgroundColor = useThemeColor({}, 'background');
+    const shadowColor = useThemeColor({}, 'shadow');
     return (
         <ThemedView style={styles.container}>
             {cards.length === 0 ? (
@@ -13,10 +18,15 @@ function CardsScreenContent() {
                     <ThemedText style={styles.emptyText}>No cards yet. Add your credit or debit cards for quick access!</ThemedText>
                 </View>
             ) : (
-                // TODO: Map cards to CardView components
-                <ThemedText>Card list goes here</ThemedText>
+                cards.map(card => (
+                    <CardView
+                        key={card.id}
+                        card={card}
+                        onEdit={() => { /* TODO: Edit card */ }}
+                        onRemove={() => removeCard(card.id)}
+                    />
+                ))
             )}
-            {/* TODO: Add FAB for adding cards */}
         </ThemedView>
     );
 }
@@ -35,4 +45,16 @@ const styles = StyleSheet.create({
     container: { flex: 1, padding: 8 },
     empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
     emptyText: { fontSize: 16, opacity: 0.7 },
-}); 
+    fab: {
+        position: 'absolute',
+        alignSelf: 'center',
+        bottom: 32,
+        borderRadius: 32,
+        width: 58,
+        height: 58,
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 20,
+        elevation: 4,
+    },
+});

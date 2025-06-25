@@ -3,7 +3,7 @@ export interface Card {
   cardholderName: string;
   bankName: string;
   cardType: 'Visa' | 'Mastercard' | 'Rupay' | 'Amex' | 'Other';
-  last4: string;
+  cardNumber: string;
   expiry: string;
   cvv?: string;
   notes?: string;

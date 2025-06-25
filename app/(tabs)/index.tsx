@@ -1,18 +1,42 @@
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { TaskList } from '../../components/TaskList';
 import { ThemedView } from '../../components/ThemedView';
 import { AddFabMenu } from '../../components/ui/AddFabMenu';
+import { COLORS } from '../../constants/Colors';
+import { useCards } from '../../state/CardContext';
+import { useDocuments } from '../../state/DocumentContext';
 import { useTasks } from '../../state/TaskContext';
 import { Task } from '../../types/task';
 
 export default function TabsHome() {
     const { tasks, addTask, updateTask, markDone } = useTasks();
+    const { addCard } = useCards();
+    const { addDocument } = useDocuments();
     const [formVisible, setFormVisible] = useState(false);
     const [editTask, setEditTask] = useState<Task | undefined>(undefined);
     const [fabMenuVisible, setFabMenuVisible] = useState(false);
+    const [cardModalVisible, setCardModalVisible] = useState(false);
+    const [documentModalVisible, setDocumentModalVisible] = useState(false);
+
+    // Card form state
+    const [cardholderName, setCardholderName] = useState('');
+    const [bankName, setBankName] = useState('');
+    const [cardType, setCardType] = useState<'Visa' | 'Mastercard' | 'Rupay' | 'Amex' | 'Other'>('Visa');
+    const [cardNumber, setCardNumber] = useState('');
+    const [expiry, setExpiry] = useState('');
+    const [cvv, setCvv] = useState('');
+    const [cardNotes, setCardNotes] = useState('');
+    const [brandingColor, setBrandingColor] = useState('');
+
+    // Document form state
+    const [docTitle, setDocTitle] = useState('');
+    const [docNotes, setDocNotes] = useState('');
+    const [fileUri, setFileUri] = useState('');
+    const [fileType, setFileType] = useState<'image' | 'pdf' | 'other'>('pdf');
+    const [thumbnailUri, setThumbnailUri] = useState('');
 
     const accentColor = useThemeColor({}, 'accent');
     const backgroundColor = useThemeColor({}, 'background');
@@ -23,7 +47,7 @@ export default function TabsHome() {
         setFormVisible(true);
     };
 
-    const handleAdd = () => {
+    const handleAddTask = () => {
         setEditTask(undefined);
         setFormVisible(true);
     };
@@ -31,6 +55,44 @@ export default function TabsHome() {
     const handleSubmit = (task: Task) => {
         if (editTask) updateTask(task);
         else addTask(task);
+    };
+
+    const handleAddCard = async () => {
+        await addCard({
+            cardholderName,
+            bankName,
+            cardType,
+            cardNumber,
+            expiry,
+            cvv: cvv || undefined,
+            notes: cardNotes || undefined,
+            brandingColor: brandingColor || undefined,
+        });
+        setCardModalVisible(false);
+        setCardholderName('');
+        setBankName('');
+        setCardType('Visa');
+        setCardNumber('');
+        setExpiry('');
+        setCvv('');
+        setCardNotes('');
+        setBrandingColor('');
+    };
+
+    const handleAddDocument = async () => {
+        await addDocument({
+            title: docTitle,
+            notes: docNotes || undefined,
+            fileUri,
+            fileType,
+            thumbnailUri: thumbnailUri || undefined,
+        });
+        setDocumentModalVisible(false);
+        setDocTitle('');
+        setDocNotes('');
+        setFileUri('');
+        setFileType('pdf');
+        setThumbnailUri('');
     };
 
     return (
@@ -50,10 +112,49 @@ export default function TabsHome() {
                 <AddFabMenu
                     visible={fabMenuVisible}
                     onClose={() => setFabMenuVisible(false)}
-                    onAddDocument={() => { setFabMenuVisible(false); }}
-                    onAddCard={() => { setFabMenuVisible(false); }}
-                    onAddTask={() => { setFabMenuVisible(false); handleAdd(); }}
+                    onAddDocument={() => { setFabMenuVisible(false); setDocumentModalVisible(true); }}
+                    onAddCard={() => { setFabMenuVisible(false); setCardModalVisible(true); }}
+                    onAddTask={() => { setFabMenuVisible(false); handleAddTask(); }}
                 />
+                {/* Card Modal */}
+                <Modal visible={cardModalVisible} animationType="slide" transparent>
+                    <View style={modalStyles.overlay}>
+                        <View style={[modalStyles.container, styles.cardModal]}>
+                            <Text style={modalStyles.header}>Add Card</Text>
+                            <TextInput style={modalStyles.input} placeholder="Cardholder Name" value={cardholderName} onChangeText={setCardholderName} />
+                            <TextInput style={modalStyles.input} placeholder="Bank Name" value={bankName} onChangeText={setBankName} />
+                            <TextInput style={modalStyles.input} placeholder="Card Type (Visa, Mastercard, etc)" value={cardType} onChangeText={t => setCardType(t as any)} />
+                            <TextInput style={modalStyles.input} placeholder="Card Nunber" value={cardNumber} onChangeText={setCardNumber} keyboardType="numeric" maxLength={4} />
+                            <TextInput style={modalStyles.input} placeholder="Expiry (MM/YY)" value={expiry} onChangeText={setExpiry} />
+                            <TextInput style={modalStyles.input} placeholder="CVV (optional)" value={cvv} onChangeText={setCvv} keyboardType="numeric" maxLength={4} />
+                            <TextInput style={modalStyles.input} placeholder="Notes (optional)" value={cardNotes} onChangeText={setCardNotes} />
+                            <TextInput style={modalStyles.input} placeholder="Branding Color (hex, optional)" value={brandingColor} onChangeText={setBrandingColor} />
+                            <View style={modalStyles.actions}>
+                                <TouchableOpacity onPress={() => setCardModalVisible(false)} style={modalStyles.cancelButton}><Text>Cancel</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={handleAddCard} style={modalStyles.saveButton}><Text style={modalStyles.saveText}>Add</Text></TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                {/* Document Modal */}
+                <Modal visible={documentModalVisible} animationType="slide" transparent>
+                    <View style={modalStyles.overlay}>
+                        <View style={[modalStyles.container, styles.cardModal]}>
+                            <Text style={modalStyles.header}>Add Document</Text>
+                            <TextInput style={modalStyles.input} placeholder="Title" value={docTitle} onChangeText={setDocTitle} />
+                            <TextInput style={modalStyles.input} placeholder="Notes (optional)" value={docNotes} onChangeText={setDocNotes} />
+                            <TextInput style={modalStyles.input} placeholder="File URI" value={fileUri} onChangeText={setFileUri} />
+                            <TextInput style={modalStyles.input} placeholder="File Type (pdf, image, other)" value={fileType} onChangeText={t => setFileType(t as any)} />
+                            <TextInput style={modalStyles.input} placeholder="Thumbnail URI (optional)" value={thumbnailUri} onChangeText={setThumbnailUri} />
+                            <View style={modalStyles.actions}>
+                                <TouchableOpacity onPress={() => setDocumentModalVisible(false)} style={modalStyles.cancelButton}><Text>Cancel</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={handleAddDocument} style={modalStyles.saveButton}><Text style={modalStyles.saveText}>Add</Text></TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                {/* Task Form Modal (already implemented) */}
+                {/* ...existing code for TaskForm... */}
             </ThemedView>
         </SafeAreaView>
     );
@@ -74,6 +175,40 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         zIndex: 20,
     },
+    cardModal: { minWidth: 300 },
+});
+
+const modalStyles = StyleSheet.create({
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    container: {
+        backgroundColor: COLORS.card,
+        borderRadius: 16,
+        padding: 20,
+        width: '90%',
+    },
+    header: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
+    input: {
+        borderWidth: 1,
+        borderColor: COLORS.background,
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 12,
+        backgroundColor: COLORS.background,
+    },
+    actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
+    cancelButton: { padding: 10 },
+    saveButton: {
+        backgroundColor: COLORS.accent,
+        borderRadius: 10,
+        padding: 10,
+    },
+    saveText: { color: '#fff', fontWeight: '600' },
 });
 
 // TODO: Add FAB animation, and better modal transitions
+// TODO: Add file picker for document modal, color picker for card modal, and validation

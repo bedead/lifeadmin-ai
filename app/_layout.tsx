@@ -5,7 +5,10 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+
 import { TaskProvider } from '../state/TaskContext';
+import { CardProvider } from '../state/CardContext';
+import { DocumentProvider } from '../state/DocumentContext';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,13 +23,17 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <TaskProvider>
-        <StatusBar translucent style="auto" />
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" options={{ headerShown: false }} />
-        </Stack>
-      </TaskProvider>
+      <CardProvider>
+        <DocumentProvider>
+          <TaskProvider>
+            <StatusBar translucent style="auto" />
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" options={{ headerShown: false }} />
+            </Stack>
+          </TaskProvider>
+        </DocumentProvider>
+      </CardProvider>
     </ThemeProvider>
   );
 }
