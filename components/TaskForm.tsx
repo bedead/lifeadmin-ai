@@ -7,7 +7,6 @@ import uuid from 'react-native-uuid';
 import { TASK_CATEGORIES } from '../constants/categories';
 import { RECURRENCE_OPTIONS } from '../constants/recurrence';
 import { Task } from '../types/task';
-import { CARD_RADIUS, CARD_SHADOW } from './TaskCard';
 
 interface Props {
   visible: boolean;
@@ -27,10 +26,13 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
     background: useThemeColor({}, 'background'),
     card: useThemeColor({}, 'card'),
     accent: useThemeColor({}, 'accent'),
-    text: useThemeColor({}, 'text')
+    headText: useThemeColor({}, 'headText'),
+    subText: useThemeColor({}, 'subText'),
+    alert: useThemeColor({}, 'alert'),
+    success: useThemeColor({}, 'success'),
   };
 
-  const styles = getStyles(COLORS, CARD_RADIUS);
+  const styles = getStyles(COLORS, 16);
 
 
   const handleSave = () => {
@@ -52,15 +54,15 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
-        <View style={[styles.container, CARD_SHADOW]}>
-          <Text style={[styles.header, { color: COLORS.text }]}>{initialTask ? 'Edit Task' : 'Add Task'}</Text>
+        <View style={[styles.container,]}>
+          <Text style={[styles.header, { color: COLORS.headText }]}>{initialTask ? 'Edit Task' : 'Add Task'}</Text>
           <TextInput
-            style={[styles.input, { color: COLORS.text }]}
+            style={[styles.input, { color: COLORS.headText }]}
             placeholder="Task title"
             value={title}
             onChangeText={setTitle}
             accessibilityLabel="Task title"
-            placeholderTextColor={COLORS.text}
+            placeholderTextColor={COLORS.headText}
           />
           <Picker
             selectedValue={category}
@@ -73,7 +75,7 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
             ))}
           </Picker>
           <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateButton} accessibilityLabel="Pick due date">
-            <Text style={[styles.dateText, { color: COLORS.text }]}>Due: {dueDate.toLocaleDateString()}</Text>
+            <Text style={[styles.dateText, { color: COLORS.headText }]}>Due: {dueDate.toLocaleDateString()}</Text>
           </TouchableOpacity>
           {showDatePicker && (
             <DateTimePicker
@@ -97,11 +99,11 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
             ))}
           </Picker>
           <View style={styles.actions}>
-            <TouchableOpacity onPress={onClose} style={styles.cancelButton} accessibilityLabel="Cancel">
-              <Text style={[styles.cancelText, { color: COLORS.text }]}>Cancel</Text>
+            <TouchableOpacity onPress={onClose} style={[styles.cancelButton]} accessibilityLabel="Cancel">
+              <Text style={[styles.buttonText]}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSave} style={styles.saveButton} accessibilityLabel="Save task">
-              <Text style={styles.saveText}>{initialTask ? 'Update' : 'Add'}</Text>
+              <Text style={styles.buttonText}>{initialTask ? 'Update' : 'Add'}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -133,7 +135,7 @@ function getStyles(COLORS: any, CARD_RADIUS: number) {
       marginBottom: 12,
       backgroundColor: COLORS.background,
     },
-    picker: { marginBottom: 12 , color: COLORS.text},
+    picker: { marginBottom: 12, color: COLORS.text },
     dateButton: {
       backgroundColor: COLORS.background,
       borderRadius: 10,
@@ -142,14 +144,13 @@ function getStyles(COLORS: any, CARD_RADIUS: number) {
     },
     dateText: {},
     actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
-    cancelButton: { padding: 10 },
-    cancelText: {},
+    cancelButton: { padding: 10, borderRadius: 10, backgroundColor: COLORS.alert },
+    buttonText: { color: COLORS.headText, fontWeight: '600' },
     saveButton: {
-      backgroundColor: COLORS.accent,
+      backgroundColor: COLORS.success,
       borderRadius: 10,
       padding: 10,
     },
-    saveText: { color: '#fff', fontWeight: '600' },
   });
 }
 

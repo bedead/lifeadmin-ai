@@ -29,6 +29,9 @@ export const TaskList: React.FC<Props> = ({ tasks, onEdit, onDone }) => {
 
     return (
         <FlatList
+            scrollEnabled={true}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             data={grouped}
             keyExtractor={item => item.key}
             renderItem={({ item }) => (

@@ -6,7 +6,6 @@ import { TaskList } from '../../components/TaskList';
 import { TaskForm } from '../../components/TaskForm';
 import { ThemedView } from '../../components/ThemedView';
 import { AddFabMenu } from '../../components/ui/AddFabMenu';
-import { COLORS } from '../../constants/Colors';
 import { useCards } from '../../state/CardContext';
 import { useDocuments } from '../../state/DocumentContext';
 import { useTasks } from '../../state/TaskContext';
@@ -39,9 +38,20 @@ export default function TabsHome() {
     const [fileType, setFileType] = useState<'image' | 'pdf' | 'other'>('pdf');
     const [thumbnailUri, setThumbnailUri] = useState('');
 
-    const accentColor = useThemeColor({}, 'accent');
-    const backgroundColor = useThemeColor({}, 'background');
-    const shadowColor = useThemeColor({}, 'shadow');
+
+    const COLORS = {
+        background: useThemeColor({}, 'background'),
+        card: useThemeColor({}, 'card'),
+        accent: useThemeColor({}, 'accent'),
+        shadowColor: useThemeColor({}, 'shadow'),
+        headText: useThemeColor({}, 'headText'),
+        subText: useThemeColor({}, 'subText'),
+        alert: useThemeColor({}, 'alert'),
+        success: useThemeColor({}, 'success'),
+    };
+
+    const styles = getMainStyles(COLORS);
+    const modalStyles = getModelStyles(COLORS);
 
     const handleEditTask = (task: Task) => {
         setEditTask(task);
@@ -97,17 +107,17 @@ export default function TabsHome() {
     };
 
     return (
-        <SafeAreaView style={[styles.safe, { backgroundColor: backgroundColor }]}>
-            <ThemedView style={[styles.container, { backgroundColor: backgroundColor }]}>
+        <SafeAreaView style={[styles.safe, { backgroundColor: COLORS.background }]}>
+            <ThemedView style={[styles.container, { backgroundColor: COLORS.background }]}>
                 <TaskList tasks={tasks} onEdit={handleEditTask} onDone={(task) => markDone(task.id)} />
                 {!fabMenuVisible && (
                     <TouchableOpacity
-                        style={[styles.fab, { backgroundColor: accentColor, shadowColor }]}
+                        style={[styles.fab, { backgroundColor: COLORS.accent, shadowColor: COLORS.shadowColor }]}
                         onPress={() => setFabMenuVisible(true)}
                         accessibilityLabel="Add menu"
                         activeOpacity={0.85}
                     >
-                        <FontAwesome name="plus" size={24} color={backgroundColor} />
+                        <FontAwesome name="plus" size={24} color={COLORS.background} />
                     </TouchableOpacity>
                 )}
                 <AddFabMenu
@@ -160,56 +170,58 @@ export default function TabsHome() {
         </SafeAreaView >
     );
 }
-
-const styles = StyleSheet.create({
-    safe: { flex: 1 },
-    container: { flex: 1, padding: 24, paddingTop: 32 },
-    fab: {
-        position: 'absolute',
-        alignSelf: 'center',
-        bottom: 20, // floats above tab bar, adjust as needed
-        right: 32,
-        borderRadius: 32,
-        width: 58,
-        height: 58,
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 20,
-    },
-    cardModal: { minWidth: 300 },
-});
-
-const modalStyles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.2)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    container: {
-        backgroundColor: COLORS.card,
-        borderRadius: 16,
-        padding: 20,
-        width: '90%',
-    },
-    header: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
-    input: {
-        borderWidth: 1,
-        borderColor: COLORS.background,
-        borderRadius: 10,
-        padding: 10,
-        marginBottom: 12,
-        backgroundColor: COLORS.background,
-    },
-    actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
-    cancelButton: { padding: 10 },
-    saveButton: {
-        backgroundColor: COLORS.accent,
-        borderRadius: 10,
-        padding: 10,
-    },
-    saveText: { color: '#fff', fontWeight: '600' },
-});
+function getMainStyles(COLORS: any) {
+    return StyleSheet.create({
+        safe: { flex: 1 },
+        container: { flex: 1, padding: 24, paddingTop: 32 },
+        fab: {
+            position: 'absolute',
+            alignSelf: 'center',
+            bottom: 20, // floats above tab bar, adjust as needed
+            right: 32,
+            borderRadius: 32,
+            width: 58,
+            height: 58,
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 20,
+        },
+        cardModal: { minWidth: 300 },
+    });
+}
+function getModelStyles(COLORS: any) {
+    return StyleSheet.create({
+        overlay: {
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.2)',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        container: {
+            backgroundColor: COLORS.card,
+            borderRadius: 16,
+            padding: 20,
+            width: '90%',
+        },
+        header: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
+        input: {
+            borderWidth: 1,
+            borderColor: COLORS.background,
+            borderRadius: 10,
+            padding: 10,
+            marginBottom: 12,
+            backgroundColor: COLORS.background,
+        },
+        actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
+        cancelButton: { padding: 10 },
+        saveButton: {
+            backgroundColor: COLORS.accent,
+            borderRadius: 10,
+            padding: 10,
+        },
+        saveText: { color: '#fff', fontWeight: '600' },
+    });
+}
 
 // TODO: Add FAB animation, and better modal transitions
 // TODO: Add file picker for document modal, color picker for card modal, and validation

@@ -36,6 +36,10 @@ export const Colors = {
     tabIconSelected: tintColorLight,
     border: '#E0E0E0',
     shadow: 'rgba(0,0,0,0.08)',
+    alert: '#FF5252', // Red for alerts
+    success: '#4CAF50', // Green for success messages
+    warning: '#FF9800', // Orange for warnings
+    info: '#2196F3', // Blue for informational messages
   },
   dark: {
     accent: "#7F5AF0",
@@ -51,6 +55,10 @@ export const Colors = {
     tabIconSelected: tintColorDark,
     border: '#2C2F33',
     shadow: 'rgb(255, 255, 255)',
+    alert: '#FF5252', // Red for alerts
+    success: '#4CAF50', // Green for success messages
+    warning: '#FF9800', // Orange for warnings
+    info: '#2196F3', // Blue for informational messages
   },
 };
 
