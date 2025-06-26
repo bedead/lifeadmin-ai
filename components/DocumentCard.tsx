@@ -14,7 +14,7 @@ interface Props {
 
 export const DocumentCard: React.FC<Props> = ({ document, onView, onEdit, onRemove }) => {
   const cardColor = useThemeColor({}, 'card');
-  const textColor = useThemeColor({}, 'text');
+  const textColor = useThemeColor({}, 'headText');
   const icon = document.fileType === 'pdf' ? 'file-pdf-o' : 'file-image-o';
 
   return (
@@ -46,10 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     marginVertical: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 2,
+    elevation: 1,
   },
   row: { flexDirection: 'row', alignItems: 'center' },
   notes: { fontSize: 13, opacity: 0.7, marginTop: 2 },

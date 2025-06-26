@@ -42,7 +42,7 @@ export default function CardsScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 8 },
+    container: { flex: 1, paddingHorizontal: 24, paddingTop: 32 },
     empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
     emptyText: { fontSize: 16, opacity: 0.7 },
     fab: {

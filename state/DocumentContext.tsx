@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import uuid from 'react-native-uuid';
 import { Document } from '../types/document';
 
 interface DocumentContextType {
@@ -30,7 +30,7 @@ export const DocumentProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const addDocument = async (doc: Omit<Document, 'id' | 'createdAt' | 'updatedAt'>) => {
     const newDoc: Document = {
       ...doc,
-      id: uuidv4(),
+      id: uuid.v4() as string,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

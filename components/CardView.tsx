@@ -14,7 +14,7 @@ interface Props {
 export const CardView: React.FC<Props> = ({ card, onEdit, onRemove }) => {
     const [flipped, setFlipped] = useState(false);
     const cardColor = card.brandingColor || useThemeColor({}, 'card');
-    const textColor = useThemeColor({}, 'text');
+    const textColor = useThemeColor({}, 'headText');
     const animatedValue = React.useRef(new Animated.Value(0)).current;
 
     // Animate flip
@@ -67,10 +67,7 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         padding: 20,
         marginVertical: 10,
-        shadowColor: '#000',
-        shadowOpacity: 0.10,
-        shadowRadius: 8,
-        elevation: 3,
+        elevation: 1,
         backfaceVisibility: 'hidden',
     },
     cardBack: {

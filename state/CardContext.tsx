@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import uuid from 'react-native-uuid';
 import { Card } from '../types/card';
 
 interface CardContextType {
@@ -29,7 +29,7 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addCard = async (card: Omit<Card, 'id' | 'createdAt' | 'updatedAt'>) => {
     const newCard: Card = {
       ...card,
-      id: uuidv4(),
+      id: uuid.v4() as string,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

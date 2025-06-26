@@ -20,12 +20,8 @@ export const TaskCard: React.FC<Props> = ({ task, onEdit, onDone }) => {
   const accentColor = useThemeColor({}, 'accent');
   const cardColor = useThemeColor({}, 'card');
 
-  const CARD_SHADOW = {
-    shadowColor: useThemeColor({}, 'shadow'),
-
-  };
   return (
-    <View style={[styles.card, { backgroundColor: cardColor }, CARD_SHADOW]}>
+    <View style={[styles.card, { backgroundColor: cardColor }]}>
       <View style={styles.row}>
         <View style={[styles.dot, { backgroundColor: category?.color || COLORS.custom }]} />
         <Text style={[styles.title, { color: headTextColor }]}>{task.title}</Text>
@@ -45,9 +41,10 @@ export const TaskCard: React.FC<Props> = ({ task, onEdit, onDone }) => {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 16,
-    padding: 20,
+    borderRadius: 18,
+    padding: 16,
     marginVertical: 10,
+    elevation: 1,
   },
   row: { flexDirection: 'row', alignItems: 'center' },
   dot: { width: 12, height: 12, borderRadius: 6, marginRight: 8 },
