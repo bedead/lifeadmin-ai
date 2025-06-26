@@ -28,11 +28,12 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
     accent: useThemeColor({}, 'accent'),
     headText: useThemeColor({}, 'headText'),
     subText: useThemeColor({}, 'subText'),
+    fadedText: useThemeColor({}, 'fadedText'),
     alert: useThemeColor({}, 'alert'),
     success: useThemeColor({}, 'success'),
   };
 
-  const styles = getStyles(COLORS, 16);
+  const styles = getStyles(COLORS);
 
 
   const handleSave = () => {
@@ -54,28 +55,30 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
-        <View style={[styles.container,]}>
+        <View style={[styles.container]}>
           <Text style={[styles.header, { color: COLORS.headText }]}>{initialTask ? 'Edit Task' : 'Add Task'}</Text>
           <TextInput
-            style={[styles.input, { color: COLORS.headText }]}
+            style={[styles.input]}
             placeholder="Task title"
             value={title}
             onChangeText={setTitle}
             accessibilityLabel="Task title"
-            placeholderTextColor={COLORS.headText}
+            placeholderTextColor={COLORS.fadedText}
           />
           <Picker
             selectedValue={category}
+            placeholder={category}
             onValueChange={setCategory}
-            style={styles.picker}
+            style={[styles.picker]}
             accessibilityLabel="Category"
+
           >
             {TASK_CATEGORIES.map(cat => (
               <Picker.Item key={cat.key} label={cat.label} value={cat.key} />
             ))}
           </Picker>
           <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateButton} accessibilityLabel="Pick due date">
-            <Text style={[styles.dateText, { color: COLORS.headText }]}>Due: {dueDate.toLocaleDateString()}</Text>
+            <Text style={[styles.dateText]}>Due: {dueDate.toLocaleDateString()}</Text>
           </TouchableOpacity>
           {showDatePicker && (
             <DateTimePicker
@@ -112,7 +115,7 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
   );
 };
 
-function getStyles(COLORS: any, CARD_RADIUS: number) {
+function getStyles(COLORS: any) {
   return StyleSheet.create({
     overlay: {
       flex: 1,
@@ -121,29 +124,31 @@ function getStyles(COLORS: any, CARD_RADIUS: number) {
       alignItems: 'center',
     },
     container: {
+      elevation: 8,
       backgroundColor: COLORS.card,
-      borderRadius: CARD_RADIUS,
-      padding: 20,
+      borderRadius: 22,
+      padding: 24,
       width: '90%',
     },
-    header: { fontSize: 18, fontWeight: '700', marginBottom: 12 },
+    header: { fontSize: 22, fontWeight: '700', marginBottom: 20, alignSelf: 'center' },
     input: {
+      color: COLORS.fadedText,
       borderWidth: 1,
       borderColor: COLORS.background,
       borderRadius: 10,
       padding: 10,
-      marginBottom: 12,
+      marginBottom: 8,
       backgroundColor: COLORS.background,
     },
-    picker: { marginBottom: 12, color: COLORS.text },
+    picker: { marginBottom: 8, color: COLORS.fadedText },
     dateButton: {
       backgroundColor: COLORS.background,
       borderRadius: 10,
       padding: 10,
-      marginBottom: 12,
+      marginBottom: 8,
     },
-    dateText: {},
-    actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 12 },
+    dateText: { color: COLORS.fadedText },
+    actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 8 },
     cancelButton: { padding: 10, borderRadius: 10, backgroundColor: COLORS.alert },
     buttonText: { color: COLORS.headText, fontWeight: '600' },
     saveButton: {
