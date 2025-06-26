@@ -17,11 +17,21 @@ const BottomTab: BottomTab[] = [
 ];
 
 export default function TabLayout() {
-    const accentColor = useThemeColor({}, 'accent');
+    const COLORS = {
+        accentColor: useThemeColor({}, 'accent'),
+        backgroundColor: useThemeColor({}, 'background'),
+        cardColor: useThemeColor({}, 'card'),
+    }
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: accentColor,
+                tabBarActiveTintColor: COLORS.accentColor,
+                tabBarStyle: {
+                    backgroundColor: COLORS.cardColor,
+                    height: 80, // 👈 Increase height here (default is ~49-56)
+                    paddingBottom: 10, // optional: add padding if icons look uncentered
+                    paddingTop: 10,
+                },
                 // tabBarBackground: () => <TabBarBackground />, // Custom seamless background
                 tabBarAccessibilityLabel: 'Bottom navigation',
             }}

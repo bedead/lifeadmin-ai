@@ -53,7 +53,7 @@ export const TaskList: React.FC<Props> = ({ tasks, onEdit, onDone }) => {
 };
 
 const styles = StyleSheet.create({
-    group: { marginBottom: 24 },
+    group: { marginBottom: 0 },
     empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 32 },
     emptyText: { fontSize: 16, opacity: 0.7 },
 });

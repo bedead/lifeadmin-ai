@@ -173,7 +173,7 @@ export default function TabsHome() {
 function getMainStyles(COLORS: any) {
     return StyleSheet.create({
         safe: { flex: 1 },
-        container: { flex: 1, padding: 24, paddingTop: 32 },
+        container: { flex: 1, paddingHorizontal: 24, paddingTop: 32 },
         fab: {
             position: 'absolute',
             alignSelf: 'center',
