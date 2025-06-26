@@ -65,18 +65,20 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
             accessibilityLabel="Task title"
             placeholderTextColor={COLORS.fadedText}
           />
-          <Picker
-            selectedValue={category}
-            placeholder={category}
-            onValueChange={setCategory}
-            style={[styles.picker]}
-            accessibilityLabel="Category"
+          <View style={styles.pickerWrapper}>
+            <Picker
+              selectedValue={category}
+              placeholder={category}
+              onValueChange={setCategory}
+              style={[styles.picker]}
+              accessibilityLabel="Category"
 
-          >
-            {TASK_CATEGORIES.map(cat => (
-              <Picker.Item key={cat.key} label={cat.label} value={cat.key} />
-            ))}
-          </Picker>
+            >
+              {TASK_CATEGORIES.map(cat => (
+                <Picker.Item key={cat.key} label={cat.label} value={cat.key} />
+              ))}
+            </Picker>
+          </View>
           <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateButton} accessibilityLabel="Pick due date">
             <Text style={[styles.dateText]}>Due: {dueDate.toLocaleDateString()}</Text>
           </TouchableOpacity>
@@ -91,16 +93,18 @@ export const TaskForm: React.FC<Props> = ({ visible, onClose, onSubmit, initialT
               }}
             />
           )}
-          <Picker
-            selectedValue={recurrence}
-            onValueChange={setRecurrence}
-            style={styles.picker}
-            accessibilityLabel="Recurrence"
-          >
-            {RECURRENCE_OPTIONS.map(opt => (
-              <Picker.Item key={opt.key} label={opt.label} value={opt.key} />
-            ))}
-          </Picker>
+          <View style={styles.pickerWrapper}>
+            <Picker
+              selectedValue={recurrence}
+              onValueChange={setRecurrence}
+              style={styles.picker}
+              accessibilityLabel="Recurrence"
+            >
+              {RECURRENCE_OPTIONS.map(opt => (
+                <Picker.Item key={opt.key} label={opt.label} value={opt.key} />
+              ))}
+            </Picker>
+          </View>
           <View style={styles.actions}>
             <TouchableOpacity onPress={onClose} style={[styles.cancelButton]} accessibilityLabel="Cancel">
               <Text style={[styles.buttonText]}>Cancel</Text>
@@ -140,7 +144,17 @@ function getStyles(COLORS: any) {
       marginBottom: 8,
       backgroundColor: COLORS.background,
     },
-    picker: { marginBottom: 8, color: COLORS.fadedText },
+    picker: {
+      color: COLORS.fadedText,
+      paddingHorizontal: 10,
+    },
+    pickerWrapper: {
+      marginBottom: 8,
+      color: COLORS.fadedText,
+      backgroundColor: COLORS.background,
+      borderRadius: 10,
+      overflow: 'hidden',
+    },
     dateButton: {
       backgroundColor: COLORS.background,
       borderRadius: 10,
@@ -148,7 +162,7 @@ function getStyles(COLORS: any) {
       marginBottom: 8,
     },
     dateText: { color: COLORS.fadedText },
-    actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 8 },
+    actions: { marginTop: 14, flexDirection: 'row', justifyContent: 'flex-end', gap: 8 },
     cancelButton: { padding: 10, borderRadius: 10, backgroundColor: COLORS.alert },
     buttonText: { color: COLORS.headText, fontWeight: '600' },
     saveButton: {

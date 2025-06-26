@@ -18,8 +18,6 @@ export const COLORS = {
   custom: '#AB47BC', // Purple
 };
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
 
 export const Colors = {
   light: {
@@ -29,11 +27,11 @@ export const Colors = {
     subText: COLORS.charcoal,
     fadedText: '#687076',
     background: '#F8F9FA',
-    tint: tintColorLight,
+    tint: '#0a7ea4',
     icon: '#687076',
     tabIconDefault: '#687076',
     card: COLORS.white,
-    tabIconSelected: tintColorLight,
+    tabIconSelected: '#0a7ea4',
     border: '#E0E0E0',
     shadow: 'rgba(0,0,0,0.08)',
     alert: '#FF5252', // Red for alerts
@@ -48,11 +46,11 @@ export const Colors = {
     fadedText: '#9BA1A6',
     faded: "#44475a",
     background: '#1E2022',
-    tint: tintColorDark,
+    tint: COLORS.white,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     card: COLORS.black,
-    tabIconSelected: tintColorDark,
+    tabIconSelected: COLORS.white,
     border: '#2C2F33',
     shadow: 'rgb(255, 255, 255)',
     alert: '#FF5252', // Red for alerts
