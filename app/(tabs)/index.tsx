@@ -163,7 +163,7 @@ export default function TabsHome() {
 
 const styles = StyleSheet.create({
     safe: { flex: 1 },
-    container: { flex: 1, padding: 8 },
+    container: { flex: 1, padding: 24, paddingTop: 32 },
     fab: {
         position: 'absolute',
         alignSelf: 'center',

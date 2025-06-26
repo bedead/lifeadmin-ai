@@ -3,44 +3,13 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
-export const Colors = {
-  light: {
-    accent: "#5F6FFF",
-    faded: "#e0e0e0",
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    card: '#F8F9FA',
-    tabIconSelected: tintColorLight,
-    border: '#E0E0E0',
-    shadow: 'rgba(0,0,0,0.08)',
-  },
-  dark: {
-    accent: "#7F5AF0",
-    text: '#ECEDEE',
-    faded: "#44475a",
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    card: '#1E2022',
-    tabIconSelected: tintColorDark,
-    border: '#2C2F33',
-    shadow: 'rgb(255, 255, 255)',
-  },
-};
-
 // Life Admin custom color palette
 export const COLORS = {
-  accent: '#3A7CA5', // Calm blue
-  background: '#F4F4F4', // Light gray
-  card: '#FFFFFF', // White
-  text: '#2D2D2D', // Charcoal
+  calmBlue: '#3A7CA5', // Calm blue
+  black: '#000000', // Black
+  white: '#FFFFFF', // White
+  lightGray: '#F4F4F4', // Light gray
+  charcoal: '#2D2D2D', // Charcoal
   shadow: 'rgba(0,0,0,0.08)',
   health: '#43A047', // Green
   bills: '#FFD600', // Yellow
@@ -48,3 +17,41 @@ export const COLORS = {
   personal: '#3A7CA5', // Blue
   custom: '#AB47BC', // Purple
 };
+
+const tintColorLight = '#0a7ea4';
+const tintColorDark = '#fff';
+
+export const Colors = {
+  light: {
+    accent: "#5F6FFF",
+    faded: "#e0e0e0",
+    headText: COLORS.black,
+    subText: COLORS.charcoal,
+    fadedText: '#687076',
+    background: '#F8F9FA',
+    tint: tintColorLight,
+    icon: '#687076',
+    tabIconDefault: '#687076',
+    card: '#FFFFFF',
+    tabIconSelected: tintColorLight,
+    border: '#E0E0E0',
+    shadow: 'rgba(0,0,0,0.08)',
+  },
+  dark: {
+    accent: "#7F5AF0",
+    headText: COLORS.white,
+    subText: COLORS.lightGray,
+    fadedText: '#9BA1A6',
+    faded: "#44475a",
+    background: '#1E2022',
+    tint: tintColorDark,
+    icon: '#9BA1A6',
+    tabIconDefault: '#9BA1A6',
+    card: '#000000',
+    tabIconSelected: tintColorDark,
+    border: '#2C2F33',
+    shadow: 'rgb(255, 255, 255)',
+  },
+};
+
+

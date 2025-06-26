@@ -136,7 +136,7 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24 },
+  container: { flex: 1, padding: 24, paddingTop: 32 },
   header: { fontSize: 22, fontWeight: '700', marginBottom: 24 },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },
   rowButtons: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },

@@ -12,8 +12,8 @@ export const CategoryBadge: React.FC<Props> = ({ categoryKey }) => {
     if (!category) return null;
     return (
         <View style={[styles.badge, { backgroundColor: category.color }]}>
-            <MaterialCommunityIcons name={category.icon as any} size={16} color="#fff" style={{ marginRight: 4 }} />
-            <Text style={[styles.text, { color: '#fff' }]}>{category.label}</Text>
+            <MaterialCommunityIcons name={category.icon as any} size={16} color={category.text_color} style={{ marginRight: 4 }} />
+            <Text style={[styles.text, { color: category.text_color }]}>{category.label}</Text>
         </View>
     );
 };
