@@ -78,56 +78,59 @@ export default function SettingsScreen() {
   };
 
   // Theme-aware colors
-  const accent = useThemeColor({}, 'accent'); // Accent color for switches and buttons
-  const background = useThemeColor({}, 'background');
-  const text = useThemeColor({}, 'text');
-  const border = useThemeColor({}, 'border');
+  const COLORS = {
+    accent: useThemeColor({}, 'accent'), // Accent color for switches and buttons
+    background: useThemeColor({}, 'background'), // Background color
+    headText: useThemeColor({}, 'headText'), // Text color
+    border: useThemeColor({}, 'border'), // Border color
+  }
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: background }]}> 
-      <View style={[styles.row, { borderColor: border }]}> 
-        <ThemedText type='default' style={[styles.label, { color: text }]}>Task Notifications</ThemedText>
+    <ThemedView style={[styles.container, { backgroundColor: COLORS.background }]}>
+      <ThemedText type='title' style={[styles.header, { color: COLORS.headText }]}>Settings</ThemedText>
+      <View style={[styles.row, { borderColor: COLORS.border }]}>
+        <ThemedText type='default' style={[styles.label, { color: COLORS.headText }]}>Task Notifications</ThemedText>
         <Switch
           value={notificationsEnabled}
           onValueChange={handleToggleNotifications}
-          thumbColor={notificationsEnabled ? accent : background}
-          trackColor={{ true: accent, false: border }}
+          thumbColor={notificationsEnabled ? COLORS.accent : COLORS.background}
+          trackColor={{ true: COLORS.accent, false: COLORS.border }}
         />
       </View>
-      <View style={[styles.row, { borderColor: border }]}> 
-        <ThemedText type='default' style={[styles.label, { color: text }]}>Use System Theme</ThemedText>
+      <View style={[styles.row, { borderColor: COLORS.border }]}>
+        <ThemedText type='default' style={[styles.label, { color: COLORS.headText }]}>Use System Theme</ThemedText>
         <Switch
           value={useSystemTheme}
           onValueChange={handleToggleSystemTheme}
-          thumbColor={useSystemTheme ? accent : background}
-          trackColor={{ true: accent, false: border }}
+          thumbColor={useSystemTheme ? COLORS.accent : COLORS.background}
+          trackColor={{ true: COLORS.accent, false: COLORS.border }}
         />
       </View>
-      <View style={[useSystemTheme ? { opacity: 0.5 } : null, styles.row, { borderColor: border }]}> 
-        <ThemedText type='default' style={[styles.label, { color: text }]}>Dark Mode</ThemedText>
+      <View style={[useSystemTheme ? { opacity: 0.5 } : null, styles.row, { borderColor: COLORS.border }]}>
+        <ThemedText type='default' style={[styles.label, { color: COLORS.headText }]}>Dark Mode</ThemedText>
         <Switch
           value={darkMode}
           onValueChange={handleToggleDarkMode}
-          thumbColor={darkMode ? accent : background}
-          trackColor={{ true: accent, false: border }}
+          thumbColor={darkMode ? COLORS.accent : COLORS.background}
+          trackColor={{ true: COLORS.accent, false: COLORS.border }}
           disabled={useSystemTheme}
           style={useSystemTheme ? { opacity: 0.5 } : null}
         />
       </View>
       <View style={styles.rowButtons}>
-        <ThemedText type='default' style={[styles.label, { color: text }]}>Export/Import Tasks</ThemedText>
+        <ThemedText type='default' style={[styles.label, { color: COLORS.headText }]}>Export/Import Tasks</ThemedText>
         <View style={{ flexDirection: 'row', gap: 8 }}>
-          <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={handleExport} accessibilityLabel="Export tasks">
+          <TouchableOpacity style={[styles.button, { backgroundColor: COLORS.accent }]} onPress={handleExport} accessibilityLabel="Export tasks">
             <ThemedText type='default' style={styles.buttonText}>Export</ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={handleImport} accessibilityLabel="Import tasks">
+          <TouchableOpacity style={[styles.button, { backgroundColor: COLORS.accent }]} onPress={handleImport} accessibilityLabel="Import tasks">
             <ThemedText type='default' style={styles.buttonText}>Import</ThemedText>
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.row}>
-        <ThemedText type='default' style={[styles.label, { color: text }]}>Biometric Lock</ThemedText>
-        <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={handleBiometricLock} accessibilityLabel="Enable biometric lock">
+        <ThemedText type='default' style={[styles.label, { color: COLORS.headText }]}>Biometric Lock</ThemedText>
+        <TouchableOpacity style={[styles.button, { backgroundColor: COLORS.accent }]} onPress={handleBiometricLock} accessibilityLabel="Enable biometric lock">
           <ThemedText type='default' style={styles.buttonText}>Enable</ThemedText>
         </TouchableOpacity>
       </View>
@@ -137,7 +140,7 @@ export default function SettingsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 24, paddingTop: 32 },
-  header: { fontSize: 22, fontWeight: '700', marginBottom: 24 },
+  header: { fontSize: 22, fontWeight: '700', marginBottom: 24, paddingTop: 8, alignSelf: 'center' },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },
   rowButtons: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },
   label: { fontSize: 16 },

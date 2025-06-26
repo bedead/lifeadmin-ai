@@ -1,7 +1,7 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { COLORS } from '../constants/Colors';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -16,12 +16,15 @@ export function ThemedText({
   type = 'default',
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const COLORS = {
+    colors: useThemeColor({ light: lightColor, dark: darkColor }, 'headText')
+  }
+  const styles = getStyles(COLORS);
 
   return (
     <Text
       style={[
-        { color },
+        { color: COLORS.colors },
         type === 'default' ? styles.default : undefined,
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
@@ -33,29 +36,30 @@ export function ThemedText({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: COLORS.accent,
-  },
-});
+function getStyles(COLORS: any) {
+  return StyleSheet.create({
+    default: {
+      fontSize: 16,
+      lineHeight: 24,
+    },
+    defaultSemiBold: {
+      fontSize: 16,
+      lineHeight: 24,
+      fontWeight: '600',
+    },
+    title: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      lineHeight: 32,
+    },
+    subtitle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    link: {
+      lineHeight: 30,
+      fontSize: 16,
+      color: COLORS.accent,
+    },
+  });
+}
